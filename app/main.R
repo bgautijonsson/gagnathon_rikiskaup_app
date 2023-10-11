@@ -1,6 +1,6 @@
 box::use(
   shiny[navbarPage, tabPanel, navbarMenu, div, moduleServer, NS, renderUI, tags, uiOutput, icon],
-  bslib[nav_spacer, nav_item, page_navbar, nav_panel]
+  bslib[nav_spacer, nav_item, page_navbar, nav_panel, bs_theme]
 )
 
 box::use(
@@ -12,6 +12,7 @@ box::use(
 box::use(
   app/logic/ui_utils
 )
+
 
 
 
