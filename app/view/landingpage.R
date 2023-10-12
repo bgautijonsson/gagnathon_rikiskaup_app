@@ -17,7 +17,11 @@ ui <- function(id) {
   
   page_fluid(
     h1("Titill á þessu appi/verkefni/etc"),
-    !!!vbs
+    layout_column_wrap(
+      width = 1/3,
+      heights_equal = "row",
+      !!!vbs
+    )
   )
 }
 

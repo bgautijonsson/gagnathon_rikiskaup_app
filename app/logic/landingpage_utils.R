@@ -12,7 +12,7 @@ box::use(
   app/logic/plotly_utils
 )
 
-
+card_height <- 300
 
 #' @export
 vbs <- list(
@@ -22,7 +22,8 @@ vbs <- list(
     theme = "purple",
     showcase = random_ggplotly(type = "point") |> plotly_utils$card_theme(),
     full_screen = TRUE,
-    p(random_text(nwords = "5"))
+    p(random_text(nwords = "5")),
+    height = card_height
   ),
   value_box(
     title = "Seljendur",
@@ -30,7 +31,8 @@ vbs <- list(
     theme = "bg-success",
     showcase = random_ggplotly(type = "line") |> plotly_utils$card_theme(),
     full_screen = TRUE,
-    p(random_text(nwords = "5"))
+    p(random_text(nwords = "5")),
+    height = card_height
   ),
   value_box(
     title = "Fjármagn",
@@ -38,6 +40,7 @@ vbs <- list(
     theme = "pink",
     showcase = random_ggplotly(type = "ribbon") |> plotly_utils$card_theme(),
     full_screen = TRUE,
-    p(random_text(nwords = "5"))
+    p(random_text(nwords = "5")),
+    height = card_height
   )
 )
