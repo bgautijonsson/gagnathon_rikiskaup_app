@@ -1,19 +1,25 @@
 # app/view/opnirreikningar.R
 
 box::use(
-  shiny[h3, moduleServer, NS, selectInput, renderUI, uiOutput, actionButton, textOutput, mainPanel, bindEvent, need, validate],
-  bslib[page_sidebar, sidebar],
-  dplyr[distinct, collect, pull, filter, count, arrange, desc, slice, mutate],
-  plotly[renderPlotly, ggplotly, plotlyOutput],
-  ggplot2[ggplot, aes, geom_line, geom_point, scale_y_continuous, labs],
-  lubridate[floor_date]
+  shiny[
+    moduleServer, NS, 
+    selectInput, actionButton,
+    renderUI, uiOutput,
+    renderText, textOutput,
+    renderPlot, plotOutput,
+    mainPanel, 
+    bindEvent,
+    h2, h3, h4, p
+  ],
+  bslib[page_sidebar, sidebar, card, layout_columns],
+  gt[render_gt, gt_output]
 )
 
 box::use(
   app/logic/data[or_data],
-  app/logic/or_utils
+  app/logic/or_utils,
+  app/logic/landingpage_utils
 )
-
 
 
 
@@ -29,12 +35,24 @@ ui <- function(id) {
         choices = or_data |> or_utils$get_unique(kaupandi)
       ),
       uiOutput(ns("birgi")),
-      actionButton(
-        inputId = ns("go"),
-        label = "Sækja gögn"
-      )
+      # actionButton(
+      #   inputId = ns("go"),
+      #   label = "Sækja gögn"
+      # )
     ),
-    plotlyOutput(ns("line_plot"))
+    layout_columns(
+      col_widths = c(4, 4, 4, 8, 4), 
+      row_heights = c(1, 4),
+      !!!or_utils$vbs(
+        text1 = textOutput(ns("text1"), container = h3),
+        text2 = textOutput(ns("text2"), container = p),
+        text3 = textOutput(ns("text3"), container = h3)
+      ),
+      plotOutput(ns("line_plot"), height = "600px"),
+      gt_output(ns("table")),
+      fillable = FALSE,
+      fill = FALSE
+    )
     
   )
 }
@@ -48,11 +66,24 @@ server <- function(id) {
       or_utils$select_birgi(or_data, input, ns("birgi"))
     })
     
-    output$line_plot <- renderPlotly({
-      p <- or_utils$line_plot(or_data, input)
-    }) |> 
-      bindEvent(
-        input$go
-      )
+    output$line_plot <- renderPlot({
+      or_utils$line_plot(or_data, input)
+    }) 
+    
+    output$table <- render_gt({
+      or_utils$table(or_data, input)
+    })
+    
+    output$text1 <- renderText({
+      or_utils$num_sellers(or_data, input)
+    })
+    
+    output$text2 <- renderText({
+      or_utils$most_selling(or_data, input)
+    })
+    
+    output$text3 <- renderText({
+      or_utils$total_value(or_data, input)
+    })
   })
 }

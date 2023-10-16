@@ -12,7 +12,7 @@ box::use(
   app/logic/plotly_utils
 )
 
-card_height <- 300
+card_height <- 100
 
 #' @export
 vbs <- list(

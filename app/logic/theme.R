@@ -8,26 +8,26 @@ box::use(
 #' @export
 shiny_theme <- function() {
   bs_theme(
-    bootswatch = "minty"
+    preset = "shiny"
   )
 }
 
 #' @export
 ggplot_theme <- function() {
   
-  title <- "#484D6D"
-  subtitle <- "#525252"
-  caption <- "#36383A"
+  title <- "#000000"
+  subtitle <- "#000000"
+  caption <- "#000000"
   axis_text <- "#4A4C45"
   strip_background <- "#e0e0e0"
-  background <- "#faf9f9"
+  background <- "#ffffff"
   
   main_font <- "Lato"
   axis_title_font <- NULL
   axis_line_col <- "#403d39"
   strip_text <- "#2E2E2E"
   
-  base_size <- 14
+  base_size <- 22
   
   theme_classic() +
     theme(
@@ -101,6 +101,19 @@ ggplot_theme <- function() {
       legend.background = element_rect(
         fill = background,
         colour = NA
-      )
+      ),
+      legend.position = "top"
     )
+}
+
+#' @export
+vbox_style <- function() {
+  paste(
+    "background-color: #ffffff!important",
+    "color: #000000!important",
+    "border: 1px solid #000000!important",
+    "",
+    sep = ";"
+  )
+  
 }
