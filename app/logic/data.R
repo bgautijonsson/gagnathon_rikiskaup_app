@@ -2,8 +2,7 @@
 
 box::use(
   arrow[copy_files, s3_bucket, read_parquet],
-  dplyr[collect],
-  dplyr[distinct, collect, pull]
+  dplyr[distinct, collect, pull, rename, select, mutate, filter]
 )
 
 #' @export
@@ -15,4 +14,13 @@ download_data <- function() {
 }
 
 #' @export
-or_data <- read_parquet("app/static/data/opnirreikningar.parquet/part-0.parquet", as_data_frame = FALSE)
+or_data <- read_parquet("app/static/data/app_data.parquet/part-0.parquet", as_data_frame = FALSE) |> 
+  mutate(
+    birgi2 = kaupandi,
+    kaupandi2 = birgi
+  ) |> 
+  select(-birgi, -kaupandi) |> 
+  rename(
+    birgi = birgi2,
+    kaupandi = kaupandi2
+  )

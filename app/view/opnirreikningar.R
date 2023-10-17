@@ -31,14 +31,11 @@ ui <- function(id) {
       width = 300,
       selectInput(
         inputId = ns("kaupandi"),
-        label = "Kaupandi",
-        choices = or_data |> or_utils$get_unique(kaupandi)
+        label = "Birgir",
+        choices = or_data |> or_utils$get_unique(kaupandi),
+        selected = "Advania Ísland ehf."
       ),
-      uiOutput(ns("birgi")),
-      # actionButton(
-      #   inputId = ns("go"),
-      #   label = "Sækja gögn"
-      # )
+      uiOutput(ns("birgi"))
     ),
     layout_columns(
       col_widths = c(4, 4, 4, 8, 4), 
