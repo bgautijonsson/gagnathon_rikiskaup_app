@@ -7,19 +7,19 @@ box::use(
 
 #' @export
 cut_isk_scale <- function() {
-  c(0, " þús." = 100, "m" = 1e6, "M" = 1e9)
+  c(0, " þús." = 1e3, "m" = 1e6, "M" = 1e9)
 }
 
 
 #' @export
 label_isk <- function() {
-  label_dollar(prefix = "", suffix = " kr", scale_cut = cut_isk_scale())
+  label_dollar(prefix = "", suffix = " kr", scale_cut = cut_isk_scale(), accuracy = 1)
 }
 
 
 #' @export
 isk <- function(x) {
-  dollar(x, prefix = "", suffix = " kr", big.mark = ".", decimal.mark = ",")
+  dollar(x, prefix = "", suffix = " kr", big.mark = ".", decimal.mark = ",", scale_cut = cut_isk_scale(), accuracy = 1)
 }
 
 #' @export

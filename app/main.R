@@ -8,7 +8,8 @@ box::use(
 box::use(
   app/view/opnirreikningar,
   app/view/rikisreikningur,
-  app/view/landingpage
+  app/view/landingpage,
+  app/view/map
 )
 
 box::use(
@@ -30,6 +31,10 @@ ui <- function(id) {
       title = "Opnir Reikningar",
       opnirreikningar$ui(ns("opnirreikningar"))
     ),
+    nav_panel(
+      title = "Landfræðileg Greining",
+      map$ui(ns("map"))
+    ),
     nav_spacer(),
     nav_item(ui_utils$link_github()),
     nav_item(ui_utils$link_tolfraedi_hi())
@@ -39,6 +44,7 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    map$server("map")
     opnirreikningar$server("opnirreikningar")
   })
 }

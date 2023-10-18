@@ -8,8 +8,12 @@ box::use(
 #' @export
 download_data <- function() {
   copy_files(
-    s3_bucket("gagnathon"),
-    "app/static/data/"
+    s3_bucket("gagnathon/app_data.parquet"),
+    "app/static/data/app_data.parquet/"
+  )
+  copy_files(
+    s3_bucket("gagnathon/food_data.parquet"),
+    "app/static/data/food_data.parquet/"
   )
 }
 
@@ -24,3 +28,7 @@ or_data <- read_parquet("app/static/data/app_data.parquet/part-0.parquet", as_da
     birgi = birgi2,
     kaupandi = kaupandi2
   )
+
+
+#' @export
+food_data <- read_parquet("app/static/data/food_data.parquet/part-0.parquet")
