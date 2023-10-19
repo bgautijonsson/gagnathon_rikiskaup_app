@@ -5,6 +5,6 @@ account: bggj
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10216816
-bundleId: 7814114
+bundleId: 7823941
 url: https://bggj.shinyapps.io/gagnathon_rikiskaup_app/
 version: 1

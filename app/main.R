@@ -9,7 +9,8 @@ box::use(
   app/view/opnirreikningar,
   app/view/rikisreikningur,
   app/view/landingpage,
-  app/view/map
+  app/view/map,
+  app/view/tegund
 )
 
 box::use(
@@ -26,13 +27,17 @@ ui <- function(id) {
   ns <- NS(id)
   page_navbar(
     theme = theme$shiny_theme(),
-    title = "Gagnaþon Ríkiskaupa",
+    title = "GovPro",
     nav_panel(
-      title = "Opnir Reikningar",
+      title = "Birgjar",
       opnirreikningar$ui(ns("opnirreikningar"))
     ),
     nav_panel(
-      title = "Landfræðileg Greining",
+      title = "Tegundir",
+      tegund$ui(ns("tegund"))
+    ),
+    nav_panel(
+      title = "Matur",
       map$ui(ns("map"))
     ),
     nav_spacer(),
@@ -44,6 +49,7 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    tegund$server("tegund")
     map$server("map")
     opnirreikningar$server("opnirreikningar")
   })

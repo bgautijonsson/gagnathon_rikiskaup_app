@@ -1,4 +1,4 @@
-# app/view/opnirreikningar.R
+# app/view/tegund.R
 
 box::use(
   shiny[
@@ -16,9 +16,8 @@ box::use(
 )
 
 box::use(
-  app/logic/data[or_data],
-  app/logic/or_utils,
-  app/logic/landingpage_utils,
+  app/logic/data[tegund_data],
+  app/logic/tegund_utils,
   app/logic/sidebar_utils
 )
 
@@ -31,18 +30,18 @@ ui <- function(id) {
     sidebar = sidebar(
       width = 300,
       selectInput(
-        inputId = ns("kaupandi"),
-        label = "Birgir",
-        choices = or_data |> or_utils$get_unique(kaupandi),
-        selected = "Advania Ísland ehf."
+        inputId = ns("tegund"),
+        label = "Útgjaldategund",
+        choices = tegund_utils$get_tegundir(),
+        selected = "Hugbúnaður"
       ),
-      uiOutput(ns("birgi")),
+      uiOutput(ns("kaupendur")),
       sidebar_utils$sidebar_info
     ),
     layout_columns(
       col_widths = c(4, 4, 4, 8, 4), 
       row_heights = c(1, 4),
-      !!!or_utils$vbs(
+      !!!tegund_utils$vbs(
         text1 = textOutput(ns("text1"), container = h3),
         text2 = textOutput(ns("text2"), container = p),
         text3 = textOutput(ns("text3"), container = h3)
@@ -60,29 +59,29 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    output$birgi <- renderUI({
+    output$kaupendur <- renderUI({
       
-      or_utils$select_birgi(or_data, input, ns("birgi"))
+      tegund_utils$select_kaupendur(tegund_data, input, ns("kaupendur"))
     })
     
     output$line_plot <- renderPlot({
-      or_utils$line_plot(or_data, input)
+      tegund_utils$line_plot(tegund_data, input)
     }) 
     
     output$table <- render_gt({
-      or_utils$table(or_data, input)
+      tegund_utils$table(tegund_data, input)
     })
     
     output$text1 <- renderText({
-      or_utils$num_sellers(or_data, input)
+      tegund_utils$num_sellers(tegund_data, input)
     })
     
     output$text2 <- renderText({
-      or_utils$most_selling(or_data, input)
+      tegund_utils$most_selling(tegund_data, input)
     })
     
     output$text3 <- renderText({
-      or_utils$total_value(or_data, input)
+      tegund_utils$total_value(tegund_data, input)
     })
   })
 }

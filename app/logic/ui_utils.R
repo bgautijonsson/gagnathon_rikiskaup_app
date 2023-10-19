@@ -10,7 +10,7 @@ link_github <- function() {
   tags$a(
     icon("github"), 
     "Kóði", 
-    href = "https://github.com/bgautijonsson/gagnathon_rikiskaup", 
+    href = "https://github.com/bgautijonsson/gagnathon_rikiskaup_app", 
     target = "_blank"
   )
 }
