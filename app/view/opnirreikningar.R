@@ -61,7 +61,6 @@ server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     output$birgi <- renderUI({
-      
       or_utils$select_birgi(or_data, input, ns("birgi"))
     })
     
