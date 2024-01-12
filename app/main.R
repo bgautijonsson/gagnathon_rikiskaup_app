@@ -27,7 +27,7 @@ ui <- function(id) {
   ns <- NS(id)
   page_navbar(
     theme = theme$shiny_theme(),
-    title = "GovPro",
+    title = "Opnir Reikningar",
     nav_panel(
       title = "Birgjar",
       opnirreikningar$ui(ns("opnirreikningar"))

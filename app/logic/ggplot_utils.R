@@ -13,13 +13,13 @@ cut_isk_scale <- function() {
 
 #' @export
 label_isk <- function() {
-  label_dollar(prefix = "", suffix = " kr", scale_cut = cut_isk_scale(), accuracy = 1)
+  label_dollar(prefix = "", suffix = " kr", scale_cut = cut_isk_scale(), accuracy = 0.1, big.mark = ".", decimal.mark = ",")
 }
 
 
 #' @export
 isk <- function(x) {
-  dollar(x, prefix = "", suffix = " kr", big.mark = ".", decimal.mark = ",", scale_cut = cut_isk_scale(), accuracy = 1)
+  dollar(x, prefix = "", suffix = " kr", big.mark = ".", decimal.mark = ",", scale_cut = cut_isk_scale(), accuracy = 0.1)
 }
 
 #' @export

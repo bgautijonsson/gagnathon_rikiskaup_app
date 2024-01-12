@@ -36,6 +36,12 @@ ui <- function(id) {
         choices = or_data |> or_utils$get_unique(kaupandi),
         selected = "Advania Ísland ehf."
       ),
+      selectInput(
+        inputId = ns("tegund"),
+        label = "Tegund útgjalda",
+        choices = c("Krónutala", "Krónur per stöðugildi"),
+        selected = "Krónutala"
+      ),
       uiOutput(ns("birgi")),
       sidebar_utils$sidebar_info
     ),
@@ -61,6 +67,7 @@ server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     output$birgi <- renderUI({
+      
       or_utils$select_birgi(or_data, input, ns("birgi"))
     })
     

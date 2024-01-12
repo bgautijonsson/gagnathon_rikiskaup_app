@@ -1,7 +1,7 @@
 # app/logic/or_utils.R
 
 box::use(
-  dplyr[distinct, filter, count, collect, mutate, summarise, pull, arrange, desc, slice, group_by, tibble, inner_join, join_by, left_join],
+  dplyr[distinct, filter, count, collect, mutate, summarise, pull, arrange, desc, slice, group_by, tibble, inner_join, join_by, left_join, rename, select],
   ggplot2[ggplot, aes, geom_line, geom_point, scale_y_continuous, labs, expansion, scale_color_identity],
   RColorBrewer[brewer.pal],
   shiny[selectizeInput, p, req, div],
@@ -48,6 +48,15 @@ num_sellers <- function(data, input) {
 
 #' @export
 most_selling <- function(data, input) {
+  
+  if (input$tegund != "Krónutala") {
+    data <- data |> 
+      select(-kr) |> 
+      rename(
+        kr = kr_per_stodugildi
+      )
+  }
+  
   data |> 
     filter(
       kaupandi %in% !!input$kaupandi
@@ -61,9 +70,25 @@ most_selling <- function(data, input) {
 
 #' @export
 total_value <- function(data, input) {
+  
+  if (input$tegund != "Krónutala") {
+    
+    
+    if (input$tegund != "Krónutala") {
+      data <- data |> 
+        select(-kr) |> 
+        rename(
+          kr = kr_per_stodugildi
+        )
+    }
+  } 
+  
   data |> 
     filter(
       kaupandi %in% !!input$kaupandi
+    ) |> 
+    filter(
+      birgi == "Samtals"
     ) |> 
     summarise(
       total = sum(kr)
@@ -71,6 +96,7 @@ total_value <- function(data, input) {
     collect() |> 
     pull(total) |> 
     ggplot_utils$isk()
+  
 }
 
 
@@ -78,6 +104,16 @@ total_value <- function(data, input) {
 #' @export
 table <- function(data, input) {
   req(input$birgi)
+  
+  if (input$tegund != "Krónutala") {
+    data <- data |> 
+      select(-kr) |> 
+      rename(
+        kr = kr_per_stodugildi
+      )
+  }
+  
+  
   tab_dat <- data |> 
     filter(
       kaupandi == input$kaupandi
@@ -130,6 +166,15 @@ table <- function(data, input) {
 #' @export
 line_plot <- function(data, input) {
   req(input$birgi)
+  
+  if (input$tegund != "Krónutala") {
+    data <- data |> 
+      select(-kr) |> 
+      rename(
+        kr = kr_per_stodugildi
+      )
+  }
+  
   plot_dat <- data |> 
     filter(
       kaupandi %in% !!input$kaupandi,
@@ -182,6 +227,14 @@ line_plot <- function(data, input) {
 
 #' @export
 select_birgi <- function(data, input, ns) {
+  
+  if (input$tegund != "Krónutala") {
+    data <- data |> 
+      select(-kr) |> 
+      rename(
+        kr = kr_per_stodugildi
+      )
+  }
   
   choices <- data |> 
     filter(kaupandi == !!input$kaupandi) |> 
